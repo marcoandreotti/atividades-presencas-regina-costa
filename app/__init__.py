@@ -7,6 +7,7 @@ from sqlalchemy import create_engine, event
 
 from app.models import Base
 from app.routes import main_bp
+from app.services.demo_data import ensure_demo_data
 
 
 def create_app(test_config: dict | None = None) -> Flask:
@@ -29,6 +30,8 @@ def create_app(test_config: dict | None = None) -> Flask:
             cursor.close()
 
     Base.metadata.create_all(engine)
+    if not app.testing:
+        ensure_demo_data(engine)
     app.extensions["database_engine"] = engine
     app.register_blueprint(main_bp)
     return app

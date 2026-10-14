@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f8fa">
+    <title>{% block title %}Registro de Atividades e Presenças{% endblock %} | Núcleo Regina Costa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('main.index') }}" aria-label="Núcleo de Convivência Regina Costa — início">
+            <span class="brand-mark" aria-hidden="true">RC</span>
+            <span class="brand-name">Núcleo de Convivência<br>Regina Costa</span>
+        </a>
+        <div class="header-actions">
+            <nav aria-label="Navegação principal">
+                <a class="nav-link{% if request.endpoint == 'main.index' %} is-current{% endif %}" href="{{ url_for('main.index') }}"{% if request.endpoint == 'main.index' %} aria-current="page"{% endif %}>Atividades</a>
+            </nav>
+            <button class="contrast-toggle" id="contrast-toggle" type="button" aria-pressed="false">Ativar alto contraste</button>
+        </div>
+    </header>
+    <main class="page-shell" id="conteudo" tabindex="-1">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+        <p>Ambiente acadêmico de demonstração. Utilize somente dados fictícios.</p>
+    </footer>
+    <script>
+        (() => {
+            const button = document.getElementById("contrast-toggle");
+            const saved = localStorage.getItem("regina-contrast") === "high";
+            const applyContrast = (enabled) => {
+                document.body.classList.toggle("high-contrast", enabled);
+                button.setAttribute("aria-pressed", String(enabled));
+                button.textContent = enabled ? "Desativar alto contraste" : "Ativar alto contraste";
+            };
+            applyContrast(saved);
+            button.addEventListener("click", () => {
+                const enabled = button.getAttribute("aria-pressed") !== "true";
+                localStorage.setItem("regina-contrast", enabled ? "high" : "standard");
+                applyContrast(enabled);
+            });
+        })();
+    </script>
+</body>
+</html>

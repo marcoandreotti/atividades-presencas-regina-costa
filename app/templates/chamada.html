@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Fazer chamada{% endblock %}
+{% block content %}
+    <nav class="breadcrumbs" aria-label="Caminho da página">
+        <a href="{{ url_for('main.index') }}">Atividades</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Fazer chamada</span>
+    </nav>
+    <div class="page-heading compact-heading">
+        <div>
+            <h1>Fazer chamada</h1>
+            <p class="page-intro">Marque uma opção para cada participante e salve o registro.</p>
+        </div>
+    </div>
+    <section class="call-context" aria-label="Atividade selecionada">
+        <div>
+            <span class="field-label">Atividade</span>
+            <h2>{{ atividade.titulo }}</h2>
+        </div>
+        <p>{{ atividade.data.strftime("%d/%m/%Y") }}{% if atividade.horario %} · {{ atividade.horario.strftime("%H:%M") }}{% endif %}</p>
+    </section>
+
+    {% if erro %}<div class="alert-error" role="alert" tabindex="-1">{{ erro }}</div>{% endif %}
+
+    <form class="attendance-form" method="post" action="{{ url_for('main.chamada', activity_id=atividade.id) }}">
+        <fieldset class="attendance-fieldset">
+            <legend>Presença por participante</legend>
+            <p class="form-hint" id="attendance-instructions">Escolha Presente ou Ausente para cada pessoa.</p>
+            <div class="participant-list">
+                {% for participante in participantes %}
+                    <fieldset class="participant-row" aria-describedby="attendance-instructions">
+                        <legend>{{ participante.nome_exibicao }}</legend>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" name="participante-{{ participante.id }}" value="presente" required{% if situacoes.get(participante.id) == "presente" %} checked{% endif %}>
+                                <span>Presente</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="participante-{{ participante.id }}" value="ausente" required{% if situacoes.get(participante.id) == "ausente" %} checked{% endif %}>
+                                <span>Ausente</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                {% else %}
+                    <p class="empty-state">Não há participantes ativos para esta chamada.</p>
+                {% endfor %}
+            </div>
+        </fieldset>
+        <div class="form-actions">
+            <a class="button button-secondary" href="{{ url_for('main.index') }}">Cancelar</a>
+            <button class="button button-primary" type="submit"{% if not participantes %} disabled{% endif %}>Salvar chamada</button>
+        </div>
+    </form>
+{% endblock %}

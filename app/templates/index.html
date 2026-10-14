@@ -1,17 +1,44 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registro de Atividades e Presenças</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <main class="container">
-        <p class="eyebrow">Núcleo de Convivência Regina Costa</p>
-        <h1>Registro de Atividades e Presenças</h1>
-        <p>A base do projeto está pronta. Os fluxos do MVP serão construídos gradativamente.</p>
-        <p class="notice">Ambiente acadêmico de demonstração. Utilize somente dados fictícios.</p>
-    </main>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Atividades{% endblock %}
+{% block content %}
+    <div class="page-heading">
+        <div>
+            <h1>Registro de atividades</h1>
+            <p class="page-intro">Encontros do Núcleo e chamadas disponíveis para consulta.</p>
+        </div>
+        <span class="demo-badge">Demonstração · dados fictícios</span>
+    </div>
+
+    <section aria-labelledby="activities-heading">
+        <div class="section-heading">
+            <h2 id="activities-heading">Próximas atividades</h2>
+            <span class="item-count">{{ atividades|length }} {{ "atividade" if atividades|length == 1 else "atividades" }}</span>
+        </div>
+        {% if atividades %}
+            <ul class="activity-list">
+                {% for atividade in atividades %}
+                    <li class="activity-row">
+                        <div class="activity-date" aria-label="Data {{ atividade.data.strftime('%d/%m/%Y') }}">
+                            <span>{{ atividade.data.strftime("%d") }}</span>
+                            <span>{{ atividade.data.strftime("%b")|upper }}</span>
+                        </div>
+                        <div class="activity-info">
+                            <h3>{{ atividade.titulo }}</h3>
+                            <p>{{ atividade.data.strftime("%d/%m/%Y") }}{% if atividade.horario %} · {{ atividade.horario.strftime("%H:%M") }}{% endif %}</p>
+                            {% if atividade.descricao %}<p class="activity-description">{{ atividade.descricao }}</p>{% endif %}
+                        </div>
+                        <div class="activity-actions">
+                            <span class="status-label">{{ "Realizada" if atividade.status == "realizada" else "Cancelada" if atividade.status == "cancelada" else "Planejada" }}</span>
+                            <a class="button button-primary" href="{{ url_for('main.chamada', activity_id=atividade.id) }}">{% if atividade.status == "realizada" %}Ver chamada{% else %}Fazer chamada{% endif %}</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty-state">
+                <h3>Nenhuma atividade cadastrada</h3>
+                <p>Quando houver um encontro disponível, ele aparecerá nesta lista.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
