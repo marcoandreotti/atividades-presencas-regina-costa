@@ -30,7 +30,7 @@ run.py            # Inicialização local da aplicação
 
 ## Situação atual
 
-O MVP permite consultar a atividade demonstrativa, registrar uma situação de presença ou ausência por participante e conferir ou corrigir o resumo. Uma base local vazia recebe automaticamente uma atividade e três participantes fictícios para demonstração. As chamadas ficam no SQLite local.
+O MVP permite consultar a atividade demonstrativa, registrar uma situação de presença ou ausência por participante, conferir ou corrigir a chamada e consultar um resumo agregado por mês. O relatório mostra totais por atividade sem exibir nomes de participantes. Uma base local vazia recebe automaticamente uma atividade e três participantes fictícios para demonstração. As chamadas ficam no SQLite local.
 
 A interface inclui navegação por teclado, foco visível, controles de rádio com rótulos associados e modo de alto contraste persistido no navegador. Esses recursos procuram reduzir barreiras operacionais hipotéticas. A contribuição à inclusão social é indireta; o protótipo não comprova impacto social nem validação com a comunidade.
 
