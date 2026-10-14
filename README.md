@@ -30,9 +30,11 @@ run.py            # Inicialização local da aplicação
 
 ## Situação atual
 
-A estrutura inicial do projeto e os modelos das entidades Atividade, Participante e Presença estão preparados. As rotas e os casos de uso serão desenvolvidos gradativamente, com commits semânticos e revisão do próprio código por Pull Request.
+O MVP permite consultar a atividade demonstrativa, registrar uma situação de presença ou ausência por participante, conferir ou corrigir a chamada e consultar um resumo agregado por mês. O relatório mostra totais por atividade sem exibir nomes de participantes. Uma base local vazia recebe automaticamente uma atividade e três participantes fictícios para demonstração. As chamadas ficam no SQLite local.
 
-Use apenas dados fictícios nas demonstrações. Este protótipo acadêmico não deve receber dados pessoais de participantes reais nem ser usado em produção.
+A interface inclui navegação por teclado, foco visível, controles de rádio com rótulos associados e modo de alto contraste persistido no navegador. Esses recursos procuram reduzir barreiras operacionais hipotéticas. A contribuição à inclusão social é indireta; o protótipo não comprova impacto social nem validação com a comunidade.
+
+Use apenas dados fictícios nas demonstrações. Este protótipo acadêmico não deve receber dados pessoais de participantes reais nem ser usado em produção. Não há autenticação implementada.
 
 ## Repositório
 

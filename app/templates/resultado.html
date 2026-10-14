@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Resultado da chamada{% endblock %}
+{% block content %}
+    <nav class="breadcrumbs" aria-label="Caminho da página">
+        <a href="{{ url_for('main.index') }}">Atividades</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Resultado da chamada</span>
+    </nav>
+    <div class="result-heading" role="status" aria-live="polite">
+        <span class="success-mark" aria-hidden="true">OK</span>
+        <div>
+            <h1>Chamada registrada</h1>
+            <p>As presenças foram salvas no banco local de demonstração.</p>
+        </div>
+    </div>
+
+    <section class="result-summary" aria-labelledby="result-activity">
+        <div class="section-heading">
+            <div>
+                <span class="field-label">Atividade</span>
+                <h2 id="result-activity">{{ atividade.titulo }}</h2>
+            </div>
+            <p>{{ atividade.data.strftime("%d/%m/%Y") }}{% if atividade.horario %} · {{ atividade.horario.strftime("%H:%M") }}{% endif %}</p>
+        </div>
+        <dl class="attendance-totals">
+            <div><dt>Participantes registrados</dt><dd>{{ linhas|length }}</dd></div>
+            <div><dt>Presentes</dt><dd>{{ presentes }}</dd></div>
+            <div><dt>Ausentes</dt><dd>{{ ausentes }}</dd></div>
+        </dl>
+    </section>
+
+    {% if linhas %}
+        <section class="result-list" aria-labelledby="participants-heading">
+            <h2 id="participants-heading">Conferir chamada</h2>
+            <ul>
+                {% for linha in linhas %}<li><span>{{ linha.nome }}</span><strong>{{ "Presente" if linha.situacao == "presente" else "Ausente" }}</strong></li>{% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    <div class="form-actions result-actions">
+        <a class="button button-secondary" href="{{ url_for('main.index') }}">Voltar às atividades</a>
+        <a class="button button-primary" href="{{ url_for('main.chamada', activity_id=atividade.id) }}">Corrigir chamada</a>
+    </div>
+{% endblock %}
