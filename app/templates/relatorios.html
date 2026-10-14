@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Relatórios mensais{% endblock %}
+{% block content %}
+    <div class="page-heading">
+        <div>
+            <h1>Resumo mensal</h1>
+            <p class="page-intro">Consulte totais agregados das chamadas por período.</p>
+        </div>
+        <span class="demo-badge">Demonstração · dados fictícios</span>
+    </div>
+
+    <form class="report-filter" method="get" action="{{ url_for('main.relatorios') }}">
+        <label for="mes">Mês das atividades</label>
+        <input id="mes" name="mes" type="month" value="{{ mes }}" required>
+        <button class="button button-primary" type="submit">Consultar mês</button>
+    </form>
+
+    <section aria-labelledby="monthly-totals-heading">
+        <div class="section-heading">
+            <h2 id="monthly-totals-heading">Totais do período</h2>
+            <span class="item-count">{{ mes }}</span>
+        </div>
+        <dl class="attendance-totals report-totals">
+            <div><dt>Atividades</dt><dd>{{ totais.atividades }}</dd></div>
+            <div><dt>Presenças</dt><dd>{{ totais.presentes }}</dd></div>
+            <div><dt>Ausências</dt><dd>{{ totais.ausentes }}</dd></div>
+        </dl>
+    </section>
+
+    <section aria-labelledby="monthly-activities-heading">
+        <h2 id="monthly-activities-heading">Chamadas por atividade</h2>
+        {% if resultados %}
+            <ul class="activity-list report-activities">
+                {% for linha in resultados %}
+                    <li class="report-activity">
+                        <div class="report-activity-info">
+                            <h3>{{ linha.titulo }}</h3>
+                            <p>{{ linha.data.strftime("%d/%m/%Y") }}</p>
+                        </div>
+                        <div class="report-metric"><strong>{{ linha.participantes_registrados }}</strong>Registros</div>
+                        <div class="report-metric"><strong>{{ linha.presentes }}</strong>Presentes</div>
+                        <div class="report-metric"><strong>{{ linha.ausentes }}</strong>Ausentes</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty-state">
+                <h3>Nenhuma atividade neste mês</h3>
+                <p>Escolha outro período para consultar as chamadas demonstrativas disponíveis.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

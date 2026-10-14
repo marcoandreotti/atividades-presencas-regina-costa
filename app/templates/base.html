@@ -17,6 +17,7 @@
         <div class="header-actions">
             <nav aria-label="Navegação principal">
                 <a class="nav-link{% if request.endpoint == 'main.index' %} is-current{% endif %}" href="{{ url_for('main.index') }}"{% if request.endpoint == 'main.index' %} aria-current="page"{% endif %}>Atividades</a>
+                <a class="nav-link{% if request.endpoint == 'main.relatorios' %} is-current{% endif %}" href="{{ url_for('main.relatorios') }}"{% if request.endpoint == 'main.relatorios' %} aria-current="page"{% endif %}>Relatórios</a>
             </nav>
             <button class="contrast-toggle" id="contrast-toggle" type="button" aria-pressed="false">Ativar alto contraste</button>
         </div>

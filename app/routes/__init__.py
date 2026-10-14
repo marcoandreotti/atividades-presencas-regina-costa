@@ -1,10 +1,13 @@
 """Rotas HTTP do fluxo de atividades e chamadas."""
 
-from sqlalchemy import select
+from datetime import date, datetime
+
+from sqlalchemy import func, select
 from flask import Blueprint, abort, current_app, redirect, render_template, request, url_for
 from sqlalchemy.orm import Session
 
 from app.models import Atividade, Participante, Presenca
+from app.services.monthly_report import summarize_month
 
 main_bp = Blueprint("main", __name__)
 
@@ -18,6 +21,29 @@ def index():
             select(Atividade).order_by(Atividade.data, Atividade.horario, Atividade.titulo)
         ).all()
         return render_template("index.html", atividades=atividades)
+
+
+@main_bp.get("/relatorios")
+def relatorios():
+    """Resume chamadas por atividade no mês selecionado."""
+    engine = _engine()
+    with Session(engine) as session:
+        mes = request.args.get("mes", "")
+        try:
+            inicio = datetime.strptime(mes, "%Y-%m").date().replace(day=1)
+        except ValueError:
+            ultima_data = session.scalar(select(func.max(Atividade.data)))
+            inicio = (ultima_data or date.today()).replace(day=1)
+            mes = inicio.strftime("%Y-%m")
+
+        fim = inicio.replace(
+            year=inicio.year + (inicio.month == 12),
+            month=1 if inicio.month == 12 else inicio.month + 1,
+        )
+        resultados, totais = summarize_month(session, inicio, fim)
+        return render_template(
+            "relatorios.html", mes=mes, resultados=resultados, totais=totais
+        )
 
 
 @main_bp.route("/atividades/<int:activity_id>/chamada", methods=["GET", "POST"])
