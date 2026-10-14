@@ -1,5 +1,6 @@
 """Aplicação do Registro de Atividades e Presenças."""
 
+import os
 from pathlib import Path
 
 from flask import Flask
@@ -15,7 +16,11 @@ def create_app(test_config: dict | None = None) -> Flask:
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
 
     app.config.from_mapping(
-        SQLALCHEMY_DATABASE_URI=f"sqlite:///{(Path(app.instance_path) / 'atividades.db').as_posix()}",
+        DEBUG=os.environ.get("FLASK_DEBUG", "").lower() in {"1", "true"},
+        SQLALCHEMY_DATABASE_URI=os.environ.get(
+            "DATABASE_URL",
+            f"sqlite:///{(Path(app.instance_path) / 'atividades.db').as_posix()}",
+        ),
     )
     if test_config:
         app.config.update(test_config)
