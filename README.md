@@ -34,6 +34,10 @@ A estrutura inicial do projeto e os modelos das entidades Atividade, Participant
 
 Use apenas dados fictícios nas demonstrações. Este protótipo acadêmico não deve receber dados pessoais de participantes reais nem ser usado em produção.
 
+## Repositório
+
+URL planejada no GitHub: <https://github.com/marcoandreotti/atividades-presencas-regina-costa>. A publicação remota será concluída após autenticação no GitHub pelo navegador.
+
 ## Licença
 
 Nenhuma licença foi definida para este projeto. Sem uma licença explícita, não há concessão de permissão para reutilização ou redistribuição do código.
@@ -97,4 +101,5 @@ docs: explica a execução local do projeto
 ```
 
 Antes de concluir cada Pull Request, confira se a mudança atende ao requisito correspondente, revise os arquivos alterados e descreva o que foi feito e como foi verificado.
+
 

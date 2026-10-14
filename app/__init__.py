@@ -15,8 +15,7 @@ def create_app(test_config: dict | None = None) -> Flask:
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
 
     app.config.from_mapping(
-        SECRET_KEY="desenvolvimento-local-trocar-antes-de-publicar",
-        SQLALCHEMY_DATABASE_URI=f"sqlite:///{Path(app.instance_path) / 'atividades.db'}",
+        SQLALCHEMY_DATABASE_URI=f"sqlite:///{(Path(app.instance_path) / 'atividades.db').as_posix()}",
     )
     if test_config:
         app.config.update(test_config)
@@ -33,4 +32,5 @@ def create_app(test_config: dict | None = None) -> Flask:
     app.extensions["database_engine"] = engine
     app.register_blueprint(main_bp)
     return app
+
 
