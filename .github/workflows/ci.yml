@@ -1,0 +1,38 @@
+name: Testes automatizados
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - homologacao
+      - "feature/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+      - homologacao
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Testes e cobertura
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Obter código
+        uses: actions/checkout@v6
+
+      - name: Configurar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Instalar dependências de desenvolvimento
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Executar testes e medir cobertura
+        run: python -m pytest --cov=app --cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=80

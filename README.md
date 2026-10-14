@@ -86,9 +86,26 @@ python run.py
 
 Abra <http://127.0.0.1:5000> no navegador. O banco de desenvolvimento será criado em `instance/atividades.db` na primeira execução. Encerre o servidor com `Ctrl+C` no terminal.
 
+## Testes automatizados
+
+Para executar os testes unitários e de integração, instale também as dependências de desenvolvimento e rode os comandos abaixo na raiz do projeto:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest
+```
+
+Para exibir a cobertura de código no terminal:
+
+```bash
+python -m pytest --cov=app --cov-report=term-missing
+```
+
+O pipeline do GitHub Actions executa os testes e exige pelo menos 80% de cobertura nas branches principais e nas Pull Requests destinadas a elas.
+
 ## Histórico de desenvolvimento
 
-O desenvolvimento será incremental. Para cada mudança, crie uma branch curta a partir de `main`, faça commits pequenos com mensagens no padrão `tipo: descrição` e abra um Pull Request para revisar a alteração antes de integrá-la.
+O desenvolvimento será incremental. Para cada funcionalidade, crie uma branch `feature/nome-curto` a partir de `develop`, faça commits pequenos com mensagens no padrão `tipo: descrição` e abra um Pull Request para `develop`. Depois da validação, promova as alterações com Pull Requests de `develop` para `homologacao` e de `homologacao` para `main`.
 
 Tipos de commit recomendados: `feat` para funcionalidade, `fix` para correção, `docs` para documentação, `refactor` para reorganização sem mudança de comportamento e `chore` para manutenção.
 
