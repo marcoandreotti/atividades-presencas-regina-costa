@@ -36,7 +36,7 @@ Use apenas dados fictícios nas demonstrações. Este protótipo acadêmico não
 
 ## Repositório
 
-URL planejada no GitHub: <https://github.com/marcoandreotti/atividades-presencas-regina-costa>. A publicação remota será concluída após autenticação no GitHub pelo navegador.
+Repositório público: <https://github.com/marcoandreotti/atividades-presencas-regina-costa>.
 
 ## Licença
 
