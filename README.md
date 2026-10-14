@@ -86,6 +86,8 @@ python run.py
 
 Abra <http://127.0.0.1:5000> no navegador. O banco de desenvolvimento será criado em `instance/atividades.db` na primeira execução. Encerre o servidor com `Ctrl+C` no terminal.
 
+Por padrão, o modo de depuração fica desativado. Para habilitá-lo durante o desenvolvimento, defina `FLASK_DEBUG=1` antes de iniciar a aplicação. Também é possível substituir o banco local configurando `DATABASE_URL` com a URL de conexão desejada.
+
 ## Histórico de desenvolvimento
 
 O desenvolvimento será incremental. Para cada mudança, crie uma branch curta a partir de `main`, faça commits pequenos com mensagens no padrão `tipo: descrição` e abra um Pull Request para revisar a alteração antes de integrá-la.
